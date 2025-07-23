@@ -1,0 +1,17 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  python:
+    build: .
+    volumes:
+      - .:/app
+      - ./requirements.txt:/app/requirements.txt
+      - ./app:/app/app
+      - ./.env:/app/.env
+    network_mode: host
+    depends_on:
+      - redis
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
