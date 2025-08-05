@@ -1,15 +1,15 @@
 from celery import Celery
 import os
 from dotenv import load_dotenv
-
+from app.config.settings_config import RedisConfig
 # Load environment variables
 load_dotenv()
 
 # Celery configuration
 celery_app = Celery(
     'flatizo',
-    broker=os.getenv('REDIS_URL', 'redis://localhost:6379/0'),
-    backend=os.getenv('REDIS_URL', 'redis://localhost:6379/0'),
+    broker=f"redis://{RedisConfig.REDIS_HOST}:{RedisConfig.REDIS_PORT}",
+    backend=f"redis://{RedisConfig.REDIS_HOST}:{RedisConfig.REDIS_PORT}",
     include=['app.tasks.email']
 )
 

@@ -6,6 +6,7 @@ from app.services.storage.base import StorageService
 from app.config.settings_config import AWSConfig  # Updated import
 import uuid
 
+
 class S3StorageService(StorageService):
     def __init__(self):
         self.s3 = boto3.client(
@@ -25,7 +26,9 @@ class S3StorageService(StorageService):
                 Key=key,
                 ExtraArgs={"ContentType": content_type},
             )
-            return f"https://{self.bucket_name}.s3.{AWSConfig.REGION}.amazonaws.com/{key}"
+            return (
+                f"https://{self.bucket_name}.s3.{AWSConfig.REGION}.amazonaws.com/{key}"
+            )
         except ClientError as e:
             raise Exception("Upload failed") from e
 

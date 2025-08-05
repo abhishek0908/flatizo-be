@@ -23,8 +23,8 @@ class MongoConfig:
     DB_NAME = os.getenv("MONGO_DB_NAME")
 
 class RedisConfig:
-    HOST = os.getenv("REDIS_HOST")
-    PORT = int(os.getenv("REDIS_PORT", 6379))
+    REDIS_HOST = os.getenv("REDIS_HOST")
+    REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
     OTP_TTL = int(os.getenv("OTP_TTL", 300))
 
 class AWSConfig:

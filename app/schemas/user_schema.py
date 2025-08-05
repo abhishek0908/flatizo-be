@@ -10,10 +10,15 @@ class LoginOTPRequest(BaseModel):
 class LoginOTPVerifyRequest(LoginOTPRequest):
     otp: str
 
+
 class LoginOTPResponse(BaseModel):
-    msg: str
+    success: bool
+    message: str
+
+
 class LoginTokenResponse(BaseModel):
-    msg: str
+    success: bool
+    message: str
     token: str
 
 
