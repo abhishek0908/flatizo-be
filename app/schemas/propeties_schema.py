@@ -2,10 +2,16 @@ from pydantic import BaseModel
 from typing import Optional, List
 from app.models.properties_model import PropertyDetails
 from app.models.user import User
-from app.constants.property_enums import PropertyType, PreferenceType, FoodPreferenceType, ListingType
+from app.constants.property_enums import (
+    PropertyType,
+    PreferenceType,
+    FoodPreferenceType,
+    ListingType,
+)
 from uuid import UUID
 from app.utils.mongo.pydantic_object import PyObjectId
 from fastapi import Form
+
 
 class PropertyDetailsBase(BaseModel):
     name_of_property: str
@@ -16,15 +22,31 @@ class PropertyDetailsBase(BaseModel):
     contact_number: str
     deposit: float
     gender_preference: PreferenceType
-    listing_for: ListingType  
+    listing_for: ListingType
     food_preference: FoodPreferenceType
     location: str
+
+
+class PropertyDetailsAll(BaseModel):
+    name_of_property: str
+    property_type: PropertyType
+    rent: float
+    floor: Optional[str] = None
+    description: str
+    contact_number: str
+    deposit: float
+    gender_preference: PreferenceType
+    listing_for: ListingType
+    food_preference: FoodPreferenceType
+    location: str
+    images: List[str] = []
 
 
 class PropertyDetailsCreate(PropertyDetailsBase):
     user_id: PyObjectId
     images: List[str] = []
     model_config = {"arbitrary_types_allowed": True}
+
 
 class PropertyDetailsUpdate(BaseModel):
     name_of_property: Optional[str] = None
@@ -40,9 +62,11 @@ class PropertyDetailsUpdate(BaseModel):
     food_preference: Optional[FoodPreferenceType] = None
     location: Optional[str] = None
 
+
 class PropertyDetailsRead(PropertyDetailsBase):
     property_uuid: UUID
     user: UUID
+
 
 class PropertyDetailsForm(BaseModel):
     name_of_property: str
@@ -70,7 +94,7 @@ class PropertyDetailsForm(BaseModel):
         gender_preference: PreferenceType = Form(...),
         listing_for: ListingType = Form(...),
         food_preference: FoodPreferenceType = Form(...),
-        location: str = Form(...)
+        location: str = Form(...),
     ) -> "PropertyDetailsForm":
         return cls(
             name_of_property=name_of_property,

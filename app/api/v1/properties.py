@@ -3,6 +3,7 @@ from app.schemas.propeties_schema import (
     PropertyDetailsBase,
     PropertyDetailsCreate,
     PropertyDetailsForm,
+    PropertyDetailsAll,
 )
 from app.repositories.properties_repo import get_properties_repo, PropertiesRepository
 from app.api.v1.auth import get_current_user
@@ -47,7 +48,7 @@ async def create_property(
         )
 
 
-@router.get("/all-properties", response_model=list[PropertyDetailsBase])
+@router.get("/all-properties", response_model=list[PropertyDetailsAll])
 async def get_all_properties(repo: PropertiesRepository = Depends(get_properties_repo)):
     try:
         properties = await repo.list_properties()
